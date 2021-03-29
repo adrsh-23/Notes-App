@@ -18,12 +18,28 @@ class _UpdateNoteState extends State<UpdateNote> {
     content = TextEditingController(text: widget.note['content']);
   }
 
-  updateNoteFile() {
-    widget.note.reference.update({
-      'title': title.text,
-      'content': content.text,
-      'timeStamp': DateTime.now()
-    });
+  final snackBar = SnackBar(
+    content: Text('Please add a title'),
+    action: SnackBarAction(
+      label: 'Ok',
+      onPressed: () {
+        // Some code to undo the change.
+      },
+    ),
+  );
+  updateNoteFile() async {
+    if (title.text == "") {
+      setState(() {
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      });
+    } else {
+      await widget.note.reference.update({
+        'title': title.text,
+        'content': content.text,
+        'timeStamp': DateTime.now()
+      });
+      Navigator.pop(context);
+    }
   }
 
   @override
@@ -32,23 +48,51 @@ class _UpdateNoteState extends State<UpdateNote> {
       appBar: AppBar(
         actions: [
           GestureDetector(
-            child: Text("Save"),
+            child: Center(
+              child: Icon(Icons.send_sharp),
+            ),
             onTap: () => updateNoteFile(),
-          )
+          ),
+          const SizedBox(
+            width: 20,
+          ),
         ],
       ),
-      body: Container(
-        child: Column(
-          children: [
-            TextField(
-              controller: title,
-            ),
-            Expanded(
-              child: TextField(
-                controller: content,
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Container(
+                  child: TextField(
+                    maxLength: 50,
+                    decoration: InputDecoration(
+                      hintText: "Title",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(1)),
+                    ),
+                    controller: title,
+                  ),
+                ),
               ),
-            )
-          ],
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Expanded(
+                  child: TextField(
+                    maxLength: null,
+                    maxLines: 23,
+                    decoration: InputDecoration(
+                      hintText: "Body",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(1)),
+                    ),
+                    controller: content,
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

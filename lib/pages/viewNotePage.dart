@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/pages/updateNotePage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ViewNote extends StatefulWidget {
   ViewNote({this.getNote});
@@ -10,21 +11,38 @@ class ViewNote extends StatefulWidget {
 }
 
 class _ViewNoteState extends State<ViewNote> {
+  deleteNote() async {
+    await FirebaseFirestore.instance
+        .runTransaction((Transaction myTransaction) async {
+      myTransaction.delete(widget.getNote.reference);
+    });
+    Navigator.popAndPushNamed(context, "homePage");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("YOLO"),
         actions: [
           GestureDetector(
-            child: Icon(Icons.update),
+            child: Icon(Icons.system_update_alt),
             onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => UpdateNote(
                           note: widget.getNote,
                         ))),
-          )
+          ),
+          const SizedBox(
+            width: 15,
+          ),
+          GestureDetector(
+            onTap: () => deleteNote(),
+            child: Icon(Icons.delete),
+          ),
+          const SizedBox(
+            width: 20,
+          ),
         ],
       ),
       body: SingleChildScrollView(
