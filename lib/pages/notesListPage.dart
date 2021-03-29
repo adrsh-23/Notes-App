@@ -13,6 +13,7 @@ class _NotesListState extends State<NotesList> {
   @override
   void initState() {
     super.initState();
+    search.clear();
     noteCollection.orderBy("timeStamp", descending: false);
   }
 
@@ -57,11 +58,12 @@ class _NotesListState extends State<NotesList> {
       body: StreamBuilder(
         stream: search.text != ""
             ? noteCollection
-                .orderBy('timeStamp', descending: true)
                 .where('title', isGreaterThanOrEqualTo: search.text)
+                .where('title', isLessThanOrEqualTo: search.text)
                 .snapshots()
             : noteCollection.orderBy('timeStamp', descending: true).snapshots(),
         builder: (_, snapshot) {
+          print(snapshot.data.docs.length);
           return GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
@@ -93,7 +95,10 @@ class _NotesListState extends State<NotesList> {
                               child: Text(
                                 snapshot.data.docs[index]['title'],
                                 style: TextStyle(
-                                    fontSize: 30, fontWeight: FontWeight.bold),
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                maxLines: 1,
                               ),
                             ),
                             const SizedBox(

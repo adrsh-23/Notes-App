@@ -38,7 +38,7 @@ class _UpdateNoteState extends State<UpdateNote> {
         'content': content.text,
         'timeStamp': DateTime.now()
       });
-      Navigator.pop(context);
+      Navigator.popAndPushNamed(context, "homePage");
     }
   }
 
