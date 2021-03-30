@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:notes_app/functions/textFieldFunctions.dart';
 
 class UpdateNote extends StatefulWidget {
   final DocumentSnapshot note;
@@ -62,35 +63,8 @@ class _UpdateNoteState extends State<UpdateNote> {
         child: Container(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Container(
-                  child: TextField(
-                    maxLength: 50,
-                    decoration: InputDecoration(
-                      hintText: "Title",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(1)),
-                    ),
-                    controller: title,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Expanded(
-                  child: TextField(
-                    maxLength: null,
-                    maxLines: 23,
-                    decoration: InputDecoration(
-                      hintText: "Body",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(1)),
-                    ),
-                    controller: content,
-                  ),
-                ),
-              )
+              buildTitle(title),
+              buildContent(content),
             ],
           ),
         ),

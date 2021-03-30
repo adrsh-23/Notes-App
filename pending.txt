@@ -1,2 +1,3 @@
 Order By timeStamp -- Done
-Search Functionality
+Search Functionality 
+Reduce code

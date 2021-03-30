@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/functions/textFieldFunctions.dart';
 import 'package:notes_app/utils/variables.dart';
 
 class AddNote extends StatefulWidget {
@@ -14,9 +15,7 @@ class _AddNoteState extends State<AddNote> {
     content: Text('Please add a title'),
     action: SnackBarAction(
       label: 'Ok',
-      onPressed: () {
-        // Some code to undo the change.
-      },
+      onPressed: () {},
     ),
   );
   saveNote() async {
@@ -56,35 +55,8 @@ class _AddNoteState extends State<AddNote> {
         child: Container(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Container(
-                  child: TextField(
-                    maxLength: 50,
-                    decoration: InputDecoration(
-                      hintText: "Title",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(1)),
-                    ),
-                    controller: title,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Expanded(
-                  child: TextField(
-                    maxLength: null,
-                    maxLines: 23,
-                    decoration: InputDecoration(
-                      hintText: "Body",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(1)),
-                    ),
-                    controller: content,
-                  ),
-                ),
-              ),
+              buildTitle(title),
+              buildContent(content),
             ],
           ),
         ),
