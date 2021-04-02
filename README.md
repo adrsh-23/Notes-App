@@ -1,6 +1,6 @@
 # Notes App
 
-### A minimal note taking app connected to firebase
+### A minimal Note taking app 
 
 
 ## Demo
