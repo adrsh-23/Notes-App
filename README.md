@@ -1,13 +1,13 @@
 # Notes App
 
-A minimal note taking app connected to firebase
+### A minimal note taking app connected to firebase
 
 
-### Demo
+## Demo
 
 
 
 
-### TODO
+## TODO
 - [ ] User Authentication
 
